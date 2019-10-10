@@ -33,5 +33,27 @@ SSD: {}
 sales_m: {}
 error: {}""".format(RSE, SSD, sales_m, error))
 
-plt.hist((data["Sales"] - data["Sales_Pred"]))
-plt.show()
+#plt.hist((data["Sales"] - data["Sales_Pred"]))
+#plt.show()
+
+# Regresión lineal múltiple
+# Se usa el paquete statsmodel para esta regresión
+
+lm2 = smf.ols(formula="Sales~TV+Newspaper", data=data).fit()
+print(lm2.params)
+print(lm2.rsquared, lm2.rsquared_adj)
+
+sales_pred = lm2.predict(data[["TV", "Newspaper"]])
+print("Sales:\n{}".format(sales_pred))
+
+SSD = sum((data["Sales"]-sales_pred)**2)
+print("SSD: {}".format(SSD))
+
+RSE = np.sqrt(SSD / (len(data)-2-1))
+print("RSE: {}".format(RSE))
+
+error = RSE / sales_m
+print("Error: {}".format(error))
+
+#Resumen
+print(lm2.summary())
