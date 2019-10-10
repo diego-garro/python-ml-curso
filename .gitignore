@@ -1,0 +1,6 @@
+.vscode/*
+datasets/*
+libs/*
+notebooks/*
+*.csv
+*.directory
