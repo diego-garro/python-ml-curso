@@ -38,6 +38,7 @@ error: {}""".format(RSE, SSD, sales_m, error))
 
 # Regresión lineal múltiple
 # Se usa el paquete statsmodel para esta regresión
+# Se usa TV y Newspaper
 
 lm2 = smf.ols(formula="Sales~TV+Newspaper", data=data).fit()
 print(lm2.params)
@@ -57,3 +58,35 @@ print("Error: {}".format(error))
 
 #Resumen
 print(lm2.summary())
+
+# Regresión lineal múltiple
+# Se usa el paquete statsmodel para esta regresión
+# Se usa TV y Radio
+
+lm3 = smf.ols(formula="Sales~TV+Radio", data=data).fit()
+#print(lm3.summary())
+sales_pred = lm3.predict(data[["TV", "Radio"]])
+print("Sales:\n{}".format(sales_pred))
+
+SSD = sum((data["Sales"]-sales_pred)**2)
+print("SSD: {}".format(SSD))
+
+RSE = np.sqrt(SSD / (len(data)-2-1))
+print("RSE: {}".format(RSE))
+
+error = RSE / sales_m
+print("Error: {}".format(error))
+
+lm4 = smf.ols(formula="Sales~TV+Radio+Newspaper", data=data).fit()
+#print(lm4.summary())
+sales_pred = lm4.predict(data[["TV", "Radio", "Newspaper"]])
+print("Sales:\n{}".format(sales_pred))
+
+SSD = sum((data["Sales"]-sales_pred)**2)
+print("SSD: {}".format(SSD))
+
+RSE = np.sqrt(SSD / (len(data)-2-1))
+print("RSE: {}".format(RSE))
+
+error = RSE / sales_m
+print("Error: {}".format(error))
