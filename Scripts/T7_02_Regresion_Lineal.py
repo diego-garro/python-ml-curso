@@ -90,3 +90,31 @@ print("RSE: {}".format(RSE))
 
 error = RSE / sales_m
 print("Error: {}".format(error))
+
+# Multicolinealidad
+# Factor Inflación de la Varianza
+# VIF = 1 : Las variables no están correlacionadas
+# VIF < 5 : Las variables tienen una correlación moderada y se pueden quedar en el modelo
+# VIF > 5 : Las variables están altamente correlacionadas y deben desaparecer del modelo
+
+# Newspaper ~ TV + Radio -> R² VIF = 1/(1-R²)
+lm_n = smf.ols(formula="Newspaper~TV+Radio", data=data).fit()
+rsquared_n = lm_n.rsquared
+VIF = 1 / (1 - rsquared_n)
+print("Newspaper ~ TV + Radio -> R²: {}\nVIF: {}".format(rsquared_n, VIF))
+
+# TV ~ Newspaper + Radio -> R² VIF = 1/(1-R²)
+lm_tv = smf.ols(formula="TV~Newspaper+Radio", data=data).fit()
+rsquared_tv = lm_tv.rsquared
+VIF = 1 / (1 - rsquared_tv)
+print("TV ~ Newspaper + Radio -> R²: {}\nVIF: {}".format(rsquared_tv, VIF))
+
+# Radio ~ Newspaper + TV -> R² VIF = 1/(1-R²)
+lm_r = smf.ols(formula="Radio~Newspaper+TV", data=data).fit()
+rsquared_r = lm_r.rsquared
+VIF = 1 / (1 - rsquared_r)
+print("Radio ~ Newspaper + TV -> R²: {}\nVIF: {}".format(rsquared_n, VIF))
+
+
+
+
