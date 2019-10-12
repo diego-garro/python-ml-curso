@@ -29,7 +29,7 @@ print(lm.summary())
 sales_pred = lm.predict(testing)
 print(sales_pred)
 
-SSD = sum((testing["Sales"] - sales_pred)**2)
+SSD = np.sum((testing["Sales"] - sales_pred)**2)
 RSE = np.sqrt(SSD / (len(testing) - 2 - 1))
 sales_mean = np.mean(testing["Sales"])
 error = RSE / sales_mean
